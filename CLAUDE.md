@@ -10,7 +10,7 @@ significant decision. Work *with* them, not instead of them.
 
 ## Status
 Design approved 2026-11-23. Current milestone: **M0 Foundations**. See `docs/ROADMAP.md`.
-A walking skeleton is being built (so far: toolchain, API health check, a trivial worker workflow, the playout leader lock); no product features yet.
+A walking skeleton exists (API health check, a trivial worker workflow, the playout leader lock, a web page); no product features yet.
 
 ## Where things are
 - `docs/PRODUCT.md` — product decisions and user journeys

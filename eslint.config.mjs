@@ -1,5 +1,6 @@
 // @ts-check
 import eslint from '@eslint/js';
+import nextCoreWebVitals from 'eslint-config-next/core-web-vitals';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
@@ -16,6 +17,11 @@ export default tseslint.config(
       '@typescript-eslint/no-extraneous-class': ['error', { allowWithDecorator: true }],
     },
   },
+  ...nextCoreWebVitals.map((config) => ({
+    ...config,
+    files: ['apps/web/**/*.{ts,tsx}'],
+    settings: { ...config.settings, next: { rootDir: 'apps/web/' } },
+  })),
   {
     files: ['**/*.{js,mjs,cjs}'],
     languageOptions: { globals: { module: 'readonly', require: 'readonly', process: 'readonly' } },
