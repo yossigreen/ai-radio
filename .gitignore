@@ -39,3 +39,7 @@ __pycache__/
 
 # Claude Code — personal settings stay local
 .claude/settings.local.json
+
+# Personal learning tracking — intentionally local-only (repo is public)
+docs/LEARNING.md
+docs/INTERVIEW_PREP.md

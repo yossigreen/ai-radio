@@ -18,7 +18,8 @@ No application code yet.
 - `docs/decisions/` — ADRs. **Read the relevant ADR before changing anything it covers.**
 - `docs/ROADMAP.md` — milestones, current scope, status
 - `docs/WORKING_AGREEMENTS.md` — tiers, Git, testing, evals, CI, learning process, Definition of Done
-- `docs/LEARNING.md`, `docs/INTERVIEW_PREP.md` — learning tracker and interview bank
+- `docs/LEARNING.md`, `docs/INTERVIEW_PREP.md` — learning tracker and interview bank. **Local-only
+  (gitignored; the repo is public).** If they're missing, ask the engineer. Never commit them.
 
 Planned layout: `apps/server` (NestJS, entry points `main.api.ts` / `main.worker.ts` /
 `main.playout.ts`), `apps/web` (Next.js), `apps/tts-local` (Python, later), `packages/contracts`,

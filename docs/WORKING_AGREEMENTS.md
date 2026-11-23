@@ -86,6 +86,8 @@ Full rationale: [ADR 0020](decisions/0020-public-repo-and-ci-gates.md).
 
 **Budget:** about 15–20% of weekly time.
 
+**Privacy:** `docs/LEARNING.md` and `docs/INTERVIEW_PREP.md` are **local-only (gitignored)** because the repository is public.
+
 ## 8. Definition of Done
 
 **Status vocabulary:** Planned → Designed → Implemented → Tested → Evaluated → Reviewed → Approved → Integrated → Deployed. Claude never says "done" or "works" without stating which state.
