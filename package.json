@@ -13,6 +13,9 @@
     "test": "pnpm -r test",
     "build": "pnpm -r build",
     "check": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test",
+    "dev:infra": "docker compose up -d --wait",
+    "dev:infra:down": "docker compose down",
+    "dev:infra:reset": "docker compose down --volumes",
     "prepare": "husky"
   },
   "lint-staged": {

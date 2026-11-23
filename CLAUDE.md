@@ -80,6 +80,9 @@ Node 24 (`.nvmrc`), pnpm 12. Run from the repo root:
 - `pnpm install` — the lockfile is the source of truth (CI uses `--frozen-lockfile`)
 - `pnpm check` — format check, lint, typecheck, all tests. **Run before every PR.**
 - `pnpm build` · `pnpm format` · `pnpm lint` · `pnpm test`
+- `pnpm dev:infra` starts Postgres, RustFS (S3), Temporal and otel-lgtm via `compose.yaml` and waits until they're healthy. `dev:infra:down` stops them; `dev:infra:reset` also **deletes their data**.
+- `cp .env.example .env` once. The server's `start:*` scripts load the root `.env`.
+- Local UIs: Temporal `:8233`, Grafana `:3300`, RustFS console `:9001/rustfs/console/`.
 - Server tests start real Postgres containers: Docker must be running.
 - Jest runs with `--experimental-vm-modules` (set in `apps/server`'s test script): Nest 12 is ESM-only, and the Temporal worker bundles workflows with `import()`.
 - The pre-commit hook runs lint-staged and gitleaks (`brew install gitleaks`).
