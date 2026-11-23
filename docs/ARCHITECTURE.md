@@ -30,7 +30,7 @@ flowchart LR
 
   TTSL[tts-local<br/>Python, later]
   PG[(Postgres + pgvector)]
-  S3[(S3 / MinIO<br/>audio + HLS segments)]
+  S3[(S3 / RustFS locally<br/>audio + HLS segments)]
   CDN[CDN]
   TMP[Temporal]
   LLM[Claude API<br/>Haiku / Sonnet]
@@ -115,7 +115,7 @@ stateDiagram-v2
 ### 2. Broadcast and playout (M1)
 
 ```
-workers ──(pre-encoded segments, T-6h; Q&A segments at minute 24)──► S3/MinIO
+workers ──(pre-encoded segments, T-6h; Q&A segments at minute 24)──► S3 (RustFS locally)
 playout (single instance), every ~6s:
     playlist = f(timeline, now)     ← pure function
     write playlist.m3u8 → S3        ← only after the segments it lists already exist
@@ -151,7 +151,7 @@ A performer workflow per airing runs during the show, about 30–60 seconds ahea
 | Store | Used for | Why |
 |---|---|---|
 | **Postgres 17+ with pgvector** | All domain state, the event log, the cost ledger, sessions, and later chunks with embeddings | One transactional store. Hybrid full-text + vector search in SQL. Advisory locks. LISTEN/NOTIFY. |
-| **S3 (MinIO locally)** | Rendered audio, HLS segments, playlists | Cheap, immutable objects behind a CDN |
+| **S3 (RustFS locally)** | Rendered audio, HLS segments, playlists | Cheap, immutable objects behind a CDN |
 | **Temporal** | Workflow execution state | Durable timers, signals and retries. **Not** queried by the product. |
 | No Redis in v1 | — | Postgres and the CDN cover current needs. Added only on a measured need. |
 

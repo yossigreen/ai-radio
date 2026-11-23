@@ -39,8 +39,8 @@ Status vocabulary: Planned → Designed → Implemented → Tested → Evaluated
 1. **Documentation** (this set): product, architecture, ADRs, roadmap, working agreements, learning tracking, root `CLAUDE.md`. *Integrated (PR #1).*
 2. ~~Open decision: learning docs in the public repo?~~ **Decided:** `LEARNING.md` and `INTERVIEW_PREP.md` are local-only (gitignored). MIT license.
 3. Create the public GitHub repo, protect `main` and add the PR template. *Integrated 2026-11-23.*
-4. Toolchain: pnpm workspace, TypeScript strict, ESLint, Prettier, Jest, husky + lint-staged, gitleaks, plus a walking skeleton (api `/health`, a trivial worker workflow, a playout loop with the leader lock, a web page). *Implemented and tested locally (PR A).* The module-boundary lint rule moves to M1, when there is more than one module to separate.
-5. Docker Compose: Postgres 17 + pgvector, MinIO, Temporal dev server, otel-lgtm.
+4. Toolchain: pnpm workspace, TypeScript strict, ESLint, Prettier, Jest, husky + lint-staged, gitleaks, plus a walking skeleton (api `/health`, a trivial worker workflow, a playout loop with the leader lock, a web page). *Integrated (PRs #2–#4).* The module-boundary lint rule moves to M1, when there is more than one module to separate.
+5. Docker Compose: Postgres 17 + pgvector, RustFS (S3; replaces MinIO, see the ADR 0018 amendment), Temporal dev server, otel-lgtm. *Implemented and tested locally (PR B).*
 6. CI workflow with the required checks (those that apply before application code exists).
 7. Context layers: `.claude/rules/` (path-scoped) and project skills (`pr-prep`, `learning-checkpoint`). Vet and vendor the third-party skills (Vercel React, security-guidance). *Tier 3 per skill.*
 8. **Spike — HLS discontinuities:** about 10 Kokoro-voiced clips joined with `EXT-X-DISCONTINUITY`, played on hls.js, iOS and Android. Decides between ADR 0005's design and the B1 fallback. *Needs a TTS provider key (external cost: cents).*
@@ -54,7 +54,7 @@ Status vocabulary: Planned → Designed → Implemented → Tested → Evaluated
 - A producer signs in (Google OIDC, sessions, roles) and creates an assignment.
 - Research from Wikipedia only (sources stored with attribution) produces a structured script with citations, then `awaiting_approval`.
 - The studio review page: script plus sources, approve or reject with a reason code.
-- After approval: TTS line by line with hosted Kokoro, loudness normalization, HLS segments in MinIO, then `ready`.
+- After approval: TTS line by line with hosted Kokoro, loudness normalization, HLS segments in S3 (RustFS locally), then `ready`.
 - Playout with a filler library (station IDs, a disclosure segment, royalty-free music) and a hard start.
 - The web player with "now playing" in sync with the audio.
 - The cost ledger, a trace from assignment to published segment, Langfuse traces, and a faithfulness eval (~20 cases) plus deterministic checks.
