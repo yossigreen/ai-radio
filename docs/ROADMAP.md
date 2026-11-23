@@ -40,8 +40,8 @@ Status vocabulary: Planned → Designed → Implemented → Tested → Evaluated
 2. ~~Open decision: learning docs in the public repo?~~ **Decided:** `LEARNING.md` and `INTERVIEW_PREP.md` are local-only (gitignored). MIT license.
 3. Create the public GitHub repo, protect `main` and add the PR template. *Integrated 2026-11-23.*
 4. Toolchain: pnpm workspace, TypeScript strict, ESLint, Prettier, Jest, husky + lint-staged, gitleaks, plus a walking skeleton (api `/health`, a trivial worker workflow, a playout loop with the leader lock, a web page). *Integrated (PRs #2–#4).* The module-boundary lint rule moves to M1, when there is more than one module to separate.
-5. Docker Compose: Postgres 17 + pgvector, RustFS (S3; replaces MinIO, see the ADR 0018 amendment), Temporal dev server, otel-lgtm. *Implemented and tested locally (PR B).*
-6. CI workflow with the required checks (those that apply before application code exists).
+5. Docker Compose: Postgres 17 + pgvector, RustFS (S3; replaces MinIO, see the ADR 0018 amendment), Temporal dev server, otel-lgtm. *Integrated (PR #5).*
+6. CI workflow with the required checks: frozen install, format, lint, typecheck, tests, build, gitleaks, dependency audit. Migration, OpenAPI-diff, eval and E2E checks join as their subjects appear (M1). *Implemented (PR C).*
 7. Context layers: `.claude/rules/` (path-scoped) and project skills (`pr-prep`, `learning-checkpoint`). Vet and vendor the third-party skills (Vercel React, security-guidance). *Tier 3 per skill.*
 8. **Spike — HLS discontinuities:** about 10 Kokoro-voiced clips joined with `EXT-X-DISCONTINUITY`, played on hls.js, iOS and Android. Decides between ADR 0005's design and the B1 fallback. *Needs a TTS provider key (external cost: cents).*
 
