@@ -37,7 +37,7 @@ Status vocabulary: Planned → Designed → Implemented → Tested → Evaluated
 ## M0 — Foundations (detail)
 
 1. **Documentation** (this set): product, architecture, ADRs, roadmap, working agreements, learning tracking, root `CLAUDE.md`. *Implemented, awaiting review.*
-2. ~~Open decision: learning docs in the public repo?~~ **Decided:** `LEARNING.md` and `INTERVIEW_PREP.md` are local-only (gitignored). No license (all rights reserved).
+2. ~~Open decision: learning docs in the public repo?~~ **Decided:** `LEARNING.md` and `INTERVIEW_PREP.md` are local-only (gitignored). MIT license.
 3. Create the public GitHub repo, protect `main` and add the PR template. *Approved 2026-11-23.*
 4. Toolchain: pnpm workspace, TypeScript strict, ESLint (including the boundary rule), Prettier, Jest, husky + lint-staged, gitleaks.
 5. Docker Compose: Postgres 17 + pgvector, MinIO, Temporal dev server, otel-lgtm.

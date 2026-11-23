@@ -27,3 +27,7 @@ See [docs/ROADMAP.md](docs/ROADMAP.md).
 
 TypeScript · NestJS · Temporal · PostgreSQL + pgvector · Drizzle · Next.js · HLS · OpenTelemetry ·
 Langfuse · AWS. Rationale for each choice lives in the ADRs.
+
+## License
+
+[MIT](LICENSE)

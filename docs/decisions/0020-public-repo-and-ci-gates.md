@@ -27,4 +27,4 @@
 ## Consequences
 - Prompts (including moderation prompts) are public. The defense lies in layered gates, rate limits and evals, not in secrecy.
 - Learning-tracking documents with personal assessments (`docs/LEARNING.md`, `docs/INTERVIEW_PREP.md`) are **local-only (gitignored)**, so they stay out of the public history.
-- No license file: all rights reserved.
+- MIT license.
