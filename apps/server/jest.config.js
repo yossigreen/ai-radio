@@ -3,7 +3,7 @@ module.exports = {
   roots: ['<rootDir>/src'],
   globalSetup: '<rootDir>/src/testing/postgres.global-setup.js',
   globalTeardown: '<rootDir>/src/testing/postgres.global-teardown.js',
-  // Starting the Postgres container takes time.
+  // Starting the Postgres container and the Temporal test server takes time.
   testTimeout: 120_000,
   transform: {
     '^.+\\.ts$': [
