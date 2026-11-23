@@ -1,0 +1,41 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build output
+dist/
+build/
+.next/
+out/
+*.tsbuildinfo
+
+# Environment and secrets — never commit real values; .env.example is the template
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Test and tooling output
+coverage/
+playwright-report/
+test-results/
+.turbo/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Local media produced during development
+/.local/
+
+# OS / editor
+.DS_Store
+*.log
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Claude Code — personal settings stay local
+.claude/settings.local.json
