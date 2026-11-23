@@ -10,7 +10,7 @@ significant decision. Work *with* them, not instead of them.
 
 ## Status
 Design approved 2026-11-23. Current milestone: **M0 Foundations**. See `docs/ROADMAP.md`.
-No application code yet.
+A walking skeleton is being built (so far: toolchain and the API health check); no product features yet.
 
 ## Where things are
 - `docs/PRODUCT.md` — product decisions and user journeys
@@ -76,4 +76,10 @@ English. Direct and technically demanding, no flattery. Challenge wrong assumpti
 Recommend; don't list options you won't pursue.
 
 ## Commands
-*To be added in M0 (toolchain setup).*
+Node 24 (`.nvmrc`), pnpm 12. Run from the repo root:
+- `pnpm install` — the lockfile is the source of truth (CI uses `--frozen-lockfile`)
+- `pnpm check` — format check, lint, typecheck, all tests. **Run before every PR.**
+- `pnpm build` · `pnpm format` · `pnpm lint` · `pnpm test`
+- Server tests start real Postgres containers: Docker must be running.
+- Jest runs with `--experimental-vm-modules` (set in `apps/server`'s test script) because Nest 12 is ESM-only.
+- The pre-commit hook runs lint-staged and gitleaks (`brew install gitleaks`).

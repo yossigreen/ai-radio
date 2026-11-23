@@ -36,10 +36,10 @@ Status vocabulary: Planned → Designed → Implemented → Tested → Evaluated
 
 ## M0 — Foundations (detail)
 
-1. **Documentation** (this set): product, architecture, ADRs, roadmap, working agreements, learning tracking, root `CLAUDE.md`. *Implemented, awaiting review.*
+1. **Documentation** (this set): product, architecture, ADRs, roadmap, working agreements, learning tracking, root `CLAUDE.md`. *Integrated (PR #1).*
 2. ~~Open decision: learning docs in the public repo?~~ **Decided:** `LEARNING.md` and `INTERVIEW_PREP.md` are local-only (gitignored). MIT license.
-3. Create the public GitHub repo, protect `main` and add the PR template. *Approved 2026-11-23.*
-4. Toolchain: pnpm workspace, TypeScript strict, ESLint (including the boundary rule), Prettier, Jest, husky + lint-staged, gitleaks.
+3. Create the public GitHub repo, protect `main` and add the PR template. *Integrated 2026-11-23.*
+4. Toolchain: pnpm workspace, TypeScript strict, ESLint, Prettier, Jest, husky + lint-staged, gitleaks, plus a walking skeleton (api `/health`, a trivial worker workflow, a playout loop with the leader lock, a web page). *In progress: toolchain and api `/health` implemented and tested.* The module-boundary lint rule moves to M1, when there is more than one module to separate.
 5. Docker Compose: Postgres 17 + pgvector, MinIO, Temporal dev server, otel-lgtm.
 6. CI workflow with the required checks (those that apply before application code exists).
 7. Context layers: `.claude/rules/` (path-scoped) and project skills (`pr-prep`, `learning-checkpoint`). Vet and vendor the third-party skills (Vercel React, security-guidance). *Tier 3 per skill.*
