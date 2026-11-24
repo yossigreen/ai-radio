@@ -29,3 +29,17 @@ These docs match the installed version exactly.
   don't use route-level `dynamic`/`fetchCache` overrides. Why: the default ("auto no cache")
   depends on what else the route does, and an implicit cache is a stale-data bug that only shows
   up in production.
+
+## Vercel React best practices: where our decisions win
+
+The vendored `vercel-react-best-practices` skill applies here, except where it conflicts with our
+ADRs; then ours win (ADR 0021). Read only the relevant `rules/<id>.md`, not its `AGENTS.md`
+(about 27K tokens of every rule).
+
+- `client-swr-dedup`: we use TanStack Query, not SWR (ADR 0013).
+- `server-auth-actions`, `async-api-routes`: we write no Server Actions or Next.js API routes.
+  Next.js renders; mutations and auth go through the NestJS API.
+- `async-dependencies`: don't add `better-all`. Any new dependency is a tier 3 decision; use
+  `Promise.all` with explicit ordering.
+- `server-cache-lru`: no cross-request caches inside Next.js. Caching is the per-call policy above,
+  the API, or the CDN.

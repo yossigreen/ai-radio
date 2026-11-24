@@ -4,3 +4,5 @@ dist/
 coverage/
 # Markdown is human-authored prose; Prettier pads whole tables on every edit, which buries real changes in diffs.
 *.md
+# Vendored third-party files stay byte-identical to the pinned upstream commit (.claude/VENDORED.md).
+.claude/skills/vercel-react-best-practices/

@@ -2,8 +2,11 @@ import { fetchApiHealth } from './api-health';
 
 describe('fetchApiHealth', () => {
   const realFetch = global.fetch;
+  const realApiUrl = process.env.API_URL;
   afterEach(() => {
     global.fetch = realFetch;
+    if (realApiUrl === undefined) delete process.env.API_URL;
+    else process.env.API_URL = realApiUrl;
   });
 
   function mockFetch(
@@ -15,6 +18,13 @@ describe('fetchApiHealth', () => {
   it('is up when the API answers 200', async () => {
     mockFetch(() => Promise.resolve({ ok: true } as Response));
     await expect(fetchApiHealth('http://api')).resolves.toBe('up');
+  });
+
+  it('defaults to the API_URL from the environment', async () => {
+    mockFetch(() => Promise.resolve({ ok: true } as Response));
+    process.env.API_URL = 'http://configured-api';
+    await fetchApiHealth();
+    expect(global.fetch).toHaveBeenCalledWith('http://configured-api/health', expect.anything());
   });
 
   it('never caches: health is live state', async () => {

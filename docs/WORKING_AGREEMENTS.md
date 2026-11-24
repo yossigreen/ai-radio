@@ -145,9 +145,10 @@ Full rationale: [ADR 0020](decisions/0020-public-repo-and-ci-gates.md).
 |---|---|
 | `simplify` (built-in) | **Required gate before every PR** |
 | `security-review` (built-in) | **Required gate** for PRs touching auth, user input, or prompts that contain listener text |
-| Anthropic `security-guidance` plugin | Warnings on dangerous patterns at edit time |
+| Anthropic `security-guidance` plugin | **Not installed** ([ADR 0021](decisions/0021-third-party-ai-assistant-context.md)): its TypeScript patterns are ESLint rules instead. Revisit at M1 |
 | Karpathy guidelines | Adapted, with attribution, into the root `CLAUDE.md` (not installed as a plugin) |
-| Vercel React best practices / composition | On-demand skill for `apps/web` |
+| Vercel React best practices | Vendored skill for `apps/web` ([ADR 0021](decisions/0021-third-party-ai-assistant-context.md)); our overrides in `.claude/rules/web.md` |
+| Vercel composition patterns | Not adopted (ADR 0021) |
 | Generic "coding standards" skills | **Not adopted.** Replaced by project-specific rules. |
 
 **Third-party skills are supply-chain inputs.** Each one is read before adoption, pinned to a commit and **vendored** into `.claude/skills/`, so any change goes through a PR. Adopting one is tier 3.
