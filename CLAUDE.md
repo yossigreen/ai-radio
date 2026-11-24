@@ -20,6 +20,7 @@ A walking skeleton exists (API health check, a trivial worker workflow, the play
 - `docs/WORKING_AGREEMENTS.md` — tiers, Git, testing, evals, CI, learning process, Definition of Done
 - `docs/LEARNING.md`, `docs/INTERVIEW_PREP.md` — learning tracker and interview bank. **Local-only
   (gitignored; the repo is public).** If they're missing, ask the engineer. Never commit them.
+- `.claude/rules/` — conventions that load when you touch matching paths (e.g. `web.md` for `apps/web`)
 
 Planned layout: `apps/server` (NestJS, entry points `main.api.ts` / `main.worker.ts` /
 `main.playout.ts`), `apps/web` (Next.js), `apps/tts-local` (Python, later), `packages/contracts`,
@@ -60,16 +61,12 @@ Planned layout: `apps/server` (NestJS, entry points `main.api.ts` / `main.worker
 4. **Goal-driven.** Define verifiable success (tests) before implementing, then loop until it's verified.
 
 ## Before opening a PR
-1. Run the required tests and checks. Report **actual** results.
-2. Run `simplify` on the diff. Run `security-review` if auth, user input or prompts with listener text are touched.
-3. Fill in the PR template, including the review guide and "Limitations / not done".
-4. Ask the engineer for approval to push and open the PR.
+Run the `pr-prep` skill before asking to push or open a PR.
 
 ## Teaching protocol
 - For decisions with learning value, ask for the engineer's reasoning before giving yours.
-- Learning checkpoints: one question at a time, **hint ladder** (hint → narrower question → explanation). Don't give the full answer immediately.
-- Rate answers honestly. Update `docs/LEARNING.md` only from demonstrated answers.
 - Known pattern: the engineer tends to give the "what" before the "why", so probe for the why.
+- Learning checkpoints (before merging a tier 2 PR, and at milestone end): run the `learning-checkpoint` skill.
 
 ## Communication
 English. Direct and technically demanding, no flattery. Challenge wrong assumptions with evidence.

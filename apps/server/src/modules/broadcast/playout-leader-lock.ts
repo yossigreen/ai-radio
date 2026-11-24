@@ -1,4 +1,4 @@
-import { Pool, PoolClient } from 'pg';
+import type { Pool, PoolClient } from 'pg';
 
 /**
  * Ensures a single active playout instance using a Postgres advisory lock.

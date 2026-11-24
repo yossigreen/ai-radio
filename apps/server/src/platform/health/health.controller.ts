@@ -1,5 +1,5 @@
 import { Controller, Get, Inject, ServiceUnavailableException } from '@nestjs/common';
-import { Pool } from 'pg';
+import type { Pool } from 'pg';
 import { DATABASE_POOL } from '../database/database.module';
 
 interface HealthResponse {
