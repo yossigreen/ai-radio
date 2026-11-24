@@ -8,7 +8,10 @@ export type ApiHealth = 'up' | 'database-down' | 'unreachable';
  */
 export async function fetchApiHealth(apiUrl: string, timeoutMs = 2_000): Promise<ApiHealth> {
   try {
-    const response = await fetch(`${apiUrl}/health`, { signal: AbortSignal.timeout(timeoutMs) });
+    const response = await fetch(`${apiUrl}/health`, {
+      cache: 'no-store', // live state: a cached "up" would hide an outage
+      signal: AbortSignal.timeout(timeoutMs),
+    });
     return response.ok ? 'up' : 'database-down';
   } catch {
     return 'unreachable';

@@ -41,8 +41,8 @@ Status vocabulary: Planned → Designed → Implemented → Tested → Evaluated
 3. Create the public GitHub repo, protect `main` and add the PR template. *Integrated 2026-11-23.*
 4. Toolchain: pnpm workspace, TypeScript strict, ESLint, Prettier, Jest, husky + lint-staged, gitleaks, plus a walking skeleton (api `/health`, a trivial worker workflow, a playout loop with the leader lock, a web page). *Integrated (PRs #2–#4).* The module-boundary lint rule moves to M1, when there is more than one module to separate.
 5. Docker Compose: Postgres 17 + pgvector, RustFS (S3; replaces MinIO, see the ADR 0018 amendment), Temporal dev server, otel-lgtm. *Integrated (PR #5).*
-6. CI workflow with the required checks: frozen install, format, lint, typecheck, tests, build, gitleaks, dependency audit. Migration, OpenAPI-diff, eval and E2E checks join as their subjects appear (M1). *Implemented (PR C).*
-7. Context layers: `.claude/rules/` (path-scoped) and project skills (`pr-prep`, `learning-checkpoint`). Vet and vendor the third-party skills (Vercel React, security-guidance). *Tier 3 per skill.*
+6. CI workflow with the required checks: frozen install, format, lint, typecheck, tests, build, gitleaks, dependency audit. Migration, OpenAPI-diff, eval and E2E checks join as their subjects appear (M1). *Integrated (PR #6).*
+7. Context layers: `.claude/rules/` (path-scoped) and project skills (`pr-prep`, `learning-checkpoint`). Vet and vendor the third-party skills (Vercel React, security-guidance). *Tier 3 per skill.* Own rules and skills: *Implemented (PR 7a).* Third-party skills: pending.
 8. **Spike — HLS discontinuities:** about 10 Kokoro-voiced clips joined with `EXT-X-DISCONTINUITY`, played on hls.js, iOS and Android. Decides between ADR 0005's design and the B1 fallback. *Needs a TTS provider key (external cost: cents).*
 
 **Needed from the engineer:** an Anthropic API key with a $40 spending cap, an OpenRouter or DeepInfra key, a Google OAuth client, a Langfuse Cloud account, approval to create the public repo.

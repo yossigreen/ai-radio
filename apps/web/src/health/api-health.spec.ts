@@ -17,6 +17,15 @@ describe('fetchApiHealth', () => {
     await expect(fetchApiHealth('http://api')).resolves.toBe('up');
   });
 
+  it('never caches: health is live state', async () => {
+    mockFetch(() => Promise.resolve({ ok: true } as Response));
+    await fetchApiHealth('http://api');
+    expect(global.fetch).toHaveBeenCalledWith(
+      'http://api/health',
+      expect.objectContaining({ cache: 'no-store' }),
+    );
+  });
+
   it('reports the database down when the API answers 503', async () => {
     mockFetch(() => Promise.resolve({ ok: false } as Response));
     await expect(fetchApiHealth('http://api')).resolves.toBe('database-down');
