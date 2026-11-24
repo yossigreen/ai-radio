@@ -21,6 +21,7 @@ A walking skeleton exists (API health check, a trivial worker workflow, the play
 - `docs/LEARNING.md`, `docs/INTERVIEW_PREP.md` — learning tracker and interview bank. **Local-only
   (gitignored; the repo is public).** If they're missing, ask the engineer. Never commit them.
 - `.claude/rules/` — conventions that load when you touch matching paths (e.g. `web.md` for `apps/web`)
+- `.claude/VENDORED.md` — pinned third-party skills. **Never edit a vendored copy;** overrides go in our own rules.
 
 Planned layout: `apps/server` (NestJS, entry points `main.api.ts` / `main.worker.ts` /
 `main.playout.ts`), `apps/web` (Next.js), `apps/tts-local` (Python, later), `packages/contracts`,

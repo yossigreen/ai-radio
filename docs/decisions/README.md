@@ -28,3 +28,4 @@ Format: `NNNN-short-title.md`, with sections Status · Context · Decision · Al
 | [0018](0018-aws-target-cloud-ready.md) | AWS target, cloud-ready from day 1, deploy in M2 | Accepted |
 | [0019](0019-presenters-and-structured-script.md) | Station-wide presenters and a structured script | Accepted |
 | [0020](0020-public-repo-and-ci-gates.md) | Public repository and CI quality gates | Accepted |
+| [0021](0021-third-party-ai-assistant-context.md) | Third-party skills and plugins for AI-assisted development | Accepted |

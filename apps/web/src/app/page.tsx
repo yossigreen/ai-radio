@@ -2,7 +2,7 @@ import { fetchApiHealth } from '../health/api-health';
 import { HealthStatus } from '../health/health-status';
 
 export default async function HomePage() {
-  const health = await fetchApiHealth(process.env.API_URL ?? 'http://localhost:3001');
+  const health = await fetchApiHealth();
   return (
     <main>
       <h1>A.I. Radio</h1>
