@@ -29,7 +29,7 @@ export default tseslint.config(
           paths: [
             {
               name: 'pg',
-              importNames: ['Pool', 'Client'],
+              importNames: ['Pool', 'Client', 'default'],
               allowTypeImports: true,
               message: 'Use createPool() from platform/database: it handles connection errors.',
             },
