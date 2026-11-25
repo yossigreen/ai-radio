@@ -39,6 +39,11 @@ from (timeline, now). Evidence and method: branch `spike/hls-discontinuities`,
 2. No continuous audio across a boundary: music beds are mixed into the clip at production time,
    and ad-libs (M4) go between lines, never mid-sentence.
 3. fMP4 segments (CMAF, `EXT-X-MAP`) rather than MPEG-TS; both behaved the same.
+4. Clip edges are normalized and checked at production time. A clip holds whole script lines only:
+   TTS chunks of one line are joined into one audio stream before encoding, so a boundary never
+   falls mid-sentence. Edge silence from TTS is trimmed, then a fixed silent margin (~80 ms) and
+   the fade are added. A gate measures the first and last 50 ms of every clip and rejects any
+   clip whose edge is not near-silent; it has a unit test with a clip that ends mid-sound.
 
 **Not yet verified:** a real iPhone, Android's ExoPlayer (React Native, later), mobile network
 switches, and multi-hour live sessions. These are checked at M2 (first deploy), before listeners.
