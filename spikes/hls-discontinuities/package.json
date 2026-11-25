@@ -1,0 +1,12 @@
+{
+  "name": "spike-hls-discontinuities",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "generate": "./generate.sh",
+    "serve": "node server.mjs"
+  },
+  "dependencies": {
+    "hls.js": "1.7.4"
+  }
+}

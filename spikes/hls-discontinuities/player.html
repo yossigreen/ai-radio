@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>HLS discontinuity spike</title>
+<style>
+  body { font: 15px system-ui, sans-serif; margin: 1rem; max-width: 46rem; }
+  label { display: inline-block; margin: 0.25rem 0.75rem 0.25rem 0; }
+  button { font-size: 15px; margin: 0.25rem 0.5rem 0.25rem 0; padding: 0.4rem 0.8rem; }
+  pre { background: #f4f4f4; padding: 0.75rem; white-space: pre-wrap; }
+</style>
+<h1>HLS discontinuity spike</h1>
+<p>
+  <label>Clips <select id="set"><option>tone</option><option>tonealigned</option><option>speech</option></select></label>
+  <label>Segments <select id="type"><option>fmp4</option><option>fmp4elst</option><option>mpegts</option></select></label>
+  <label>Playlist <select id="mode"><option>vod</option><option>live</option></select></label>
+  <label>Engine <select id="engine"><option>auto</option><option>hls.js</option><option>native</option></select></label>
+</p>
+<p>
+  <button id="start">Start</button>
+  <button id="crash">Simulate playout crash (12s)</button>
+</p>
+<audio id="audio" controls></audio>
+<pre id="report">Press Start. The tone set measures gaps objectively; the speech set is for listening.</pre>
+<script src="/hls.js"></script>
+<script>
+  const $ = (id) => document.getElementById(id);
+  const audio = $('audio');
+  const state = { gaps: [], clicks: [], stalls: 0, errors: [], startedAt: 0, engine: '', measured: true };
+  let manifest = null;
+
+  function report() {
+    const listened = state.startedAt ? (performance.now() - state.startedAt) / 1000 : 0;
+    const gapsMs = state.gaps.map((g) => g.ms);
+    $('report').textContent = JSON.stringify({
+      variant: `${$('set').value}-${$('type').value}`, mode: $('mode').value, engine: state.engine,
+      userAgent: navigator.userAgent, listenedSeconds: Math.round(listened),
+      position: Number(audio.currentTime.toFixed(2)),
+      audioCapture: state.measured ? 'ok' : 'no samples (this browser does not expose HLS audio to Web Audio): listen instead',
+      gapCount: state.gaps.length,
+      gapMs: gapsMs.length ? { min: Math.min(...gapsMs), max: Math.max(...gapsMs),
+        avg: Number((gapsMs.reduce((a, b) => a + b, 0) / gapsMs.length).toFixed(1)) } : null,
+      clickCount: state.clicks.length, stalls: state.stalls, errors: state.errors.slice(-5),
+      gaps: state.gaps.slice(-20), boundaries: manifest && $('mode').value === 'vod' ? manifest.boundaries : 'loops every ' + manifest?.total.toFixed(1) + 's, 10 boundaries per loop',
+    }, null, 2);
+  }
+
+  // Captures decoded audio and finds silent runs and sample jumps. Meaningful for the tone set:
+  // a continuous sine should never be silent, and never jump by more than ~0.03 per sample.
+  function analyze() {
+    const ctx = new AudioContext();
+    const source = ctx.createMediaElementSource(audio);
+    const proc = ctx.createScriptProcessor(4096, 1, 1);
+    const minRun = Math.round(ctx.sampleRate / 1000); // 1 ms
+    let run = 0, prev = 0, sawSignal = false;
+    proc.onaudioprocess = (e) => {
+      const x = e.inputBuffer.getChannelData(0);
+      e.outputBuffer.getChannelData(0).set(x);
+      if (audio.paused) return;
+      for (let i = 0; i < x.length; i++) {
+        const v = x[i];
+        if (Math.abs(v) > 0.01) sawSignal = true;
+        if (Math.abs(v) < 0.002) run++;
+        else {
+          if (run >= minRun && sawSignal) state.gaps.push({ at: Number(audio.currentTime.toFixed(2)), ms: Number((run / ctx.sampleRate * 1000).toFixed(1)) });
+          run = 0;
+        }
+        if (sawSignal && Math.abs(v - prev) > 0.1) state.clicks.push(Number(audio.currentTime.toFixed(2)));
+        prev = v;
+      }
+    };
+    source.connect(proc).connect(ctx.destination);
+    setTimeout(() => { if (!sawSignal && !audio.paused) state.measured = false; }, 5000);
+  }
+
+  $('start').onclick = async () => {
+    const set = $('set').value, type = $('type').value, mode = $('mode').value;
+    const variant = `${set}-${type}`;
+    manifest = await (await fetch(`/out/${variant}/manifest.json`)).json();
+    const src = mode === 'vod' ? `/out/${variant}/vod.m3u8` : `/live/${variant}.m3u8`;
+    const native = audio.canPlayType('application/vnd.apple.mpegurl');
+    const useNative = $('engine').value === 'native' || ($('engine').value === 'auto' && native && !window.Hls?.isSupported());
+    if (useNative) { state.engine = 'native'; audio.src = src; }
+    else {
+      state.engine = `hls.js ${Hls.version}`;
+      const hls = new Hls({ lowLatencyMode: false });
+      hls.on(Hls.Events.ERROR, (_e, d) => state.errors.push(`${d.type}/${d.details}${d.fatal ? ' FATAL' : ''}`));
+      hls.loadSource(src);
+      hls.attachMedia(audio);
+    }
+    audio.addEventListener('waiting', () => state.stalls++);
+    analyze();
+    await audio.play();
+    state.startedAt = performance.now();
+    setInterval(report, 1000);
+    $('start').disabled = true;
+  };
+  $('crash').onclick = () => fetch('/crash?seconds=12');
+</script>
+</html>
