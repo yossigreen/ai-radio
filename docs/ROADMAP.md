@@ -43,7 +43,7 @@ Status vocabulary: Planned → Designed → Implemented → Tested → Evaluated
 5. Docker Compose: Postgres 17 + pgvector, RustFS (S3; replaces MinIO, see the ADR 0018 amendment), Temporal dev server, otel-lgtm. *Integrated (PR #5).*
 6. CI workflow with the required checks: frozen install, format, lint, typecheck, tests, build, gitleaks, dependency audit. Migration, OpenAPI-diff, eval and E2E checks join as their subjects appear (M1). *Integrated (PR #6).*
 7. Context layers: `.claude/rules/` (path-scoped) and project skills (`pr-prep`, `learning-checkpoint`). Vet and vendor the third-party skills (Vercel React, security-guidance). *Tier 3 per skill.* Own rules and skills: *Integrated (PR #7, #8).* Third-party: *Implemented (PR 7b, ADR 0021)*: Vercel React best practices vendored; composition patterns not adopted; security-guidance replaced by ESLint rules, revisit at M1.
-8. **Spike — HLS discontinuities:** about 10 Kokoro-voiced clips joined with `EXT-X-DISCONTINUITY`, played on hls.js, iOS and Android. Decides between ADR 0005's design and the B1 fallback. *Needs a TTS provider key (external cost: cents).*
+8. **Spike — HLS discontinuities:** about 10 Kokoro-voiced clips joined with `EXT-X-DISCONTINUITY`, played on hls.js, iOS and Android. Decides between ADR 0005's design and the B1 fallback. *Needs a TTS provider key (external cost: cents).* *Done 2026-11-25: ADR 0005 validated with constraints (speech boundaries inaudible on hls.js and Safari). Used local `say` audio instead of a TTS key; the key moves to M1.*
 
 **Needed from the engineer:** an Anthropic API key with a $40 spending cap, an OpenRouter or DeepInfra key, a Google OAuth client, a Langfuse Cloud account, approval to create the public repo.
 

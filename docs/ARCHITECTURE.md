@@ -127,7 +127,7 @@ CDN → hls.js / AVPlayer / ExoPlayer (≈3-segment buffer, ~18–30s behind liv
 - **Failover budget:** a new playout must be publishing again within the client buffer (~18s), or listeners stall.
 - **Caching:** segments are immutable (long TTL). The playlist gets a ~1–2s TTL.
 - The client syncs "now playing" through `EXT-X-PROGRAM-DATE-TIME`, so no server push is needed for it.
-- **Risk:** frequent discontinuities between separately encoded clips may cause audible gaps on some players. An M0 spike validates this; the fallback is live encoding in playout ([0005](decisions/0005-hls-pre-encoded-segments.md)).
+- **Clip boundaries** leave ~20–40 ms of silence, inaudible at speech pauses (M0 spike). So boundaries fall only at natural pauses, and no continuous audio crosses them ([0005](decisions/0005-hls-pre-encoded-segments.md)).
 
 ### 3. Listener Q&A (M3)
 
